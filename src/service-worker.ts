@@ -1,8 +1,9 @@
 /// <reference lib="webworker" />
 
 // Import Workbox modules for pre-caching and handling service worker lifecycle
-import {precacheAndRoute} from 'workbox-precaching'
 import {clientsClaim} from 'workbox-core'
+import {createHandlerBoundToURL, precacheAndRoute} from 'workbox-precaching';
+import {NavigationRoute, registerRoute} from 'workbox-routing';
 
 // Declare the global scope for the service worker
 declare const self: ServiceWorkerGlobalScope
@@ -116,9 +117,14 @@ self.skipWaiting()
 // Claim any clients immediately after activation, so that the service worker takes control of all open clients
 clientsClaim()
 
-// Precache the files listed in the manifest generated during the build process
+/** PRE-CACHE (APP SHELL TO WORK OFFLINE) **/
+ // NOT IN DEV MODE, USE VITE PREVIEW TO PRECACHE
+
+ // Precache the files listed in the manifest generated during the build process
 // self.__WB_MANIFEST is injected by Workbox at build time
 precacheAndRoute(self.__WB_MANIFEST)
+
+registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')));
 
 /** VARIABLES **/
 
