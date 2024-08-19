@@ -1,5 +1,5 @@
 {
-  "name": "rockstar-pwa-push",
+  "name": "rockstar-pwa-fcm",
   "version": "0.0.2",
   "type": "module",
   "scripts": {
