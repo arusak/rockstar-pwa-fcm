@@ -23,7 +23,4 @@
     "target": "esnext",
     "types": ["vite/client"]
   },
-  "include": [
-    "src"
-  ],
 }

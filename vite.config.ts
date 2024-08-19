@@ -22,9 +22,9 @@ export default defineConfig(({ mode }) => {
         filename: 'service-worker.ts',
         registerType: 'autoUpdate',
         manifest: {
-          name: 'Rockstar PWA + Push Showcase',
-          short_name: 'Rockstar PWA',
-          start_url: '/rockstar-pwa-push/',
+          name: 'Rockstar PWA + Firebase Messaging',
+          short_name: 'Rockstar PWA FCM',
+          start_url: '/rockstar-pwa-fcm/',
           display: 'standalone',
           theme_color: '#f5ba22',
           background_color: '#f5ba22',
@@ -83,9 +83,6 @@ export default defineConfig(({ mode }) => {
     },
     preview: {
       port: 8080,
-    },
-    test: {
-      globals: true,
     },
   };
 });
