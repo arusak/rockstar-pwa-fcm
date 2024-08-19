@@ -23,4 +23,5 @@
     "target": "esnext",
     "types": ["vite/client"]
   },
+  "exclude": ["build", "node_modules"]
 }
