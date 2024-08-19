@@ -1,4 +1,4 @@
-# Rockstar PWA + Push Showcase
+# Rockstar PWA + FCM Showcase
 
 This is a simple proof of concept that demonstrates the capabilities of Push Notifications in progressive web applications.
 
@@ -77,6 +77,11 @@ The production-ready files will be generated in the `build` directory.
 ## 📱 iOS Compatibility
 
 The project is fully compatible with iOS Safari, ensuring that the Push API, Notification API, and Badge API work seamlessly on iOS devices.
+
+## MacOS won't show notifications by default
+
+By default, MacOS has notifications disabled for your browser. Go to Settings > Notifications, find your browser,
+allow notifications with options "Show in Notification Center" and "Badge Notification Icon".
 
 ## 🙌 Contributing
 
