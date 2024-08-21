@@ -1,8 +1,13 @@
 name: Deploy
 
 env:
-  VITE_VAPID_KEY: BGdL595OYfn0whXOJSJfrKsQu0hE4XDm3mH_F8a00cdOqbPXcCyTljPWuIU_inEJNYkmjCUr9eAmiIJnvmkKxVY
-  VITE_PUSH_URL: https://rockstar-push.glitch.me/send-push
+  VITE_FIREBASE_API_KEY: <API key>
+  VITE_FIREBASE_AUTH_DOMAIN: <app name>.firebaseapp.com
+  VITE_FIREBASE_PROJECT_ID: <app name>
+  VITE_FIREBASE_STORAGE_BUCKET: <app name>.appspot.com
+  VITE_FIREBASE_MESSAGING_SENDER_ID: <sender id>
+  VITE_FIREBASE_APP_ID: <app id>
+  VITE_FIREBASE_VAPID_KEY: <VAPID key>
 on:
   push:
     branches:
@@ -26,7 +31,7 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: Build project
-        run: npm run build -- --base=/rockstar-pwa-push
+        run: npm run build -- --base=/rockstar-pwa-fcm
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v3
