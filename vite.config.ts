@@ -73,6 +73,12 @@ export default defineConfig(({mode}) => {
     css: {
       devSourcemap: true,
     },
+    resolve: {
+      alias: {
+        // Fixes issues with Firebase compat imports
+        'firebase/compat': 'firebase/compat/index.esm.js'
+      }
+    },
     server: {
       port: 3333,
       https:
