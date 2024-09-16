@@ -1,7 +1,7 @@
 /// <reference lib="webworker" />
 
 import {initializeApp} from 'firebase/app'
-import {getMessaging} from 'firebase/messaging/sw'
+import {getMessaging, onBackgroundMessage} from 'firebase/messaging/sw'
 import {clientsClaim} from 'workbox-core'
 import {createHandlerBoundToURL, precacheAndRoute} from 'workbox-precaching'
 import {NavigationRoute, registerRoute} from 'workbox-routing'
@@ -14,7 +14,29 @@ console.info(`Service worker build ${import.meta.env.VITE_BUILD || 'unknown'}`)
 
 /** FIREBASE SETUP **/
 const firebaseApp = initializeApp(firebaseConfig)
-getMessaging(firebaseApp)
+const messaging = getMessaging(firebaseApp)
+
+onBackgroundMessage(messaging, async (payload) => {
+  console.log('[SW] Received background message ', payload);
+
+  const promises: Promise<unknown>[] = [];
+
+  // Display a badge with count 1
+  const badgePromise = showBadge(4);
+  promises.push(badgePromise);
+
+  // Show a notification with the data received in the FCM message
+  const title = payload.notification?.title || 'New Message';
+  const body = payload.notification?.body || 'You have a new message';
+  const notificationPromise = self.registration.showNotification(title, { body });
+  promises.push(notificationPromise);
+
+  try {
+    return await Promise.all(promises)
+  } catch (e) {
+    return await sendLog(`FCM background message processing failed. ${e}`)
+  }
+});
 
 /** METHODS **/
 /**
@@ -129,23 +151,4 @@ self.addEventListener('message', (event) => {
       event.waitUntil(self.navigator.clearAppBadge())
     }
   }
-})
-
-// Event listener for push events
-self.addEventListener('push', (event) => {
-  sendLog('Received a push message')
-
-  const promises: Promise<unknown>[] = []
-
-  // Display a badge with count 1
-  const badgePromise = showBadge(1)
-  promises.push(badgePromise)
-
-  // Show a notification with the data received in the push message
-  const {title = 'Empty message', body = 'Empty message'} = event.data?.json() || {}
-  const notificationPromise = self.registration.showNotification(title, {body})
-  promises.push(notificationPromise)
-
-  const all = Promise.all(promises).catch(e => sendLog(`Push processing failed. ${e}`))
-  event.waitUntil(all)
 })
