@@ -20,6 +20,7 @@ export default defineConfig(({mode}) => {
         strategies: 'injectManifest',
         srcDir: 'src',
         filename: 'service-worker.ts',
+        injectRegister: null,
         registerType: 'autoUpdate',
         manifest: {
           name: 'Rockstar PWA + Firebase Messaging',
@@ -53,13 +54,10 @@ export default defineConfig(({mode}) => {
             },
           ],
         },
-        injectRegister: 'auto',
-        devOptions: {
-          enabled: true,
-          type: 'module',
-        },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+          globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+          sourcemap: true,
+          cleanupOutdatedCaches: true
         },
       }),
       readableCssModules(),
